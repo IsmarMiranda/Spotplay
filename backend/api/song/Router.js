@@ -10,8 +10,9 @@ class SongRouter {
   registerRoutes () {
     this._router.get('/', this.handleGetSong.bind(this))
     this._router.post('/', this.handlePostSong.bind(this))
-    this._router.delete('/', this.handleDeleteSong.bind(this))
-    this._router.put('/', this.handlePutSong.bind(this))
+    this._router.get('/:name', this.handleGetaSong.bind(this))
+    // this._router.delete('/', this.handleDeleteSong.bind(this))
+    // this._router.put('/', this.handlePutSong.bind(this))
   }
 
   handleGetSong (req, res) {
@@ -29,6 +30,12 @@ class SongRouter {
   handlePostSong (req, res) {
     const song = req.body
     const result = this._ctrl.createNewSong(song)
+    this._response.success(req, res, result, 201)
+  }
+
+  handleGetaSong (req, res) {
+    const { name } = req.params
+    const result = this._ctrl.findSong(name)
     this._response.success(req, res, result, 201)
   }
 

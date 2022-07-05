@@ -72,5 +72,5 @@ export class DataJson {
 // console.table(response2)
 
 // const test = new DataJson()
-// const result = test.findByAtribute('song', '_title', 'song1')
+// const result = test.findByAtribute('song', '_title', 'Minutos')
 // console.table(result)

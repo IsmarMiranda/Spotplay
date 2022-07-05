@@ -10,6 +10,7 @@ class PlaylistRouter {
   registerRoutes () {
     this._router.get('/', this.handleGetPlaylist.bind(this))
     this._router.post('/', this.handlePostPlaylist.bind(this))
+    // this._router.get('')
     // this._router.delete('/', this.handleDeleteSong.bind(this))
     // this._router.put('/', this.handlePutSong.bind(this))
   }

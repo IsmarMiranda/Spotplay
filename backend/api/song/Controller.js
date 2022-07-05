@@ -17,6 +17,11 @@ class SongController {
     return response
   }
 
+  findSong (song) {
+    const response = this._service.findByAtribute('song', '_title', song)
+    return response
+  }
+
   updateSong (song) {
     console.log(song)
     return 'updated a song'
