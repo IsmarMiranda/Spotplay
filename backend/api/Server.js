@@ -14,6 +14,7 @@ import { tipoCuentaModule } from './tipocuenta/index.js'
 import { artistModule } from './artist/index.js'
 import { genderModule } from './gender/index.js'
 import { albumModule } from './album/index.js'
+import { playlistModule } from './playlist/index.js'
 import { authModule } from './auth/index.js'
 // esta clase crea el servidor
 class Server {
@@ -41,6 +42,7 @@ class Server {
     this._app.use('/api/v1/artist', artistModule())
     this._app.use('/api/v1/album', albumModule())
     this._app.use('/api/v1/gender', genderModule())
+    this._app.use('/api/v1/playlist', playlistModule())
     this._app.use('/api/v1/user', userModule(express.Router))
     this._app.use('/api/v1/auth', authModule(express.Router))
     this._app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(this._swaggerFile))
