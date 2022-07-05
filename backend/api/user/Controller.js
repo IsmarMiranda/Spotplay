@@ -22,7 +22,7 @@ class UserController {
   }
 
   getAllSong () {
-    const response = this._service.all('song')
+    const response = this._service.all('user')
     return response
   }
 

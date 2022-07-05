@@ -50,6 +50,17 @@ export class DataJson {
     const items = this.readJsonFile()
     return items[table] || []
   }
+
+  // para obtener mas resultados debemos usar en vez de find. flicter
+  // Creamos metodo para obtener un registro por un atributo, metodo generico que se encargue de buscar campos o items por atributos
+  findByAtribute (table, atribute, value) {
+    const items = this.readJsonFile()
+    const item = items[table].find(item => item[atribute] === value)
+    if (item) {
+      return item
+    }
+    return null
+  }
 }
 
 // const data = new DataJson()
@@ -59,3 +70,7 @@ export class DataJson {
 // const response2 = data.all('song')
 // console.table(response)
 // console.table(response2)
+
+// const test = new DataJson()
+// const result = test.findByAtribute('song', '_title', 'song1')
+// console.table(result)
