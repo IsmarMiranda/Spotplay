@@ -1,19 +1,19 @@
 // los controller se encargar de realizar la logica del negocio
 
-class ArtistController {
+class AlbumController {
   constructor (serviceArtist, artist) {
     this._service = serviceArtist
     this._entity = artist
   }
 
-  getAllArtist () {
-    const response = this._service.all('artist')
+  getAllAlbum () {
+    const response = this._service.all('album')
     return response
   }
 
-  createNewArtist (artist) {
-    const newArtist = new this._entity(artist)
-    const response = this._service.save('artist', newArtist)
+  createNewAlbum (album) {
+    const newAlbum = new this._entity(album)
+    const response = this._service.save('album', newAlbum)
     return response
   }
 
@@ -28,4 +28,4 @@ class ArtistController {
   }
 }
 
-export default ArtistController
+export default AlbumController

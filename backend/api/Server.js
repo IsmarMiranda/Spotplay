@@ -5,6 +5,9 @@ import morgan from 'morgan'
 import { userModule } from './user/index.js'
 import { songMudule } from './song/index.js'
 import { tipoCuentaModule } from './tipocuenta/index.js'
+import { artistModule } from './artist/index.js'
+import { genderModule } from './gender/index.js'
+import { albumModule } from './album/index.js'
 // esta clase crea el servidor
 class Server {
   constructor (config) {
@@ -26,6 +29,9 @@ class Server {
   setRoutes () {
     this._app.use('/api/v1/song', songMudule())
     this._app.use('/api/v1/tipocuenta', tipoCuentaModule())
+    this._app.use('/api/v1/artist', artistModule())
+    this._app.use('/api/v1/album', albumModule())
+    this._app.use('/api/v1/gender', genderModule())
     this._app.use('/api/v1/user', userModule(express.Router))
   }
 
