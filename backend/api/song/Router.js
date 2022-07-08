@@ -16,15 +16,27 @@ class SongRouter {
   }
 
   async handleGetSong (req, res) {
+    if (Object.keys(req.query).length === 0) {
+      console.log('Hay Query :)')
+    } else {
+      console.log('No hay Query :(')
+    }
+    // const q1 = req.query.name
+    // const q2 = req.query.id
+    // console.log(q1)
+    // console.log(q2)
+    console.log('Hello world')
+    /*
     try {
-      const result = await this._ctrl.getAllSong()
+      const resu
+      lt = await this._ctrl.getAllSong()
       this._response.success(req, res, result, this._httpCode.ok)
       if (result.length === 0) {
         this._response.success(req, res, 'No hay Canciones', this._httpCode.not_found)
       }
     } catch (error) {
       this._response.error(req, res, error, this._httpCode.internal_server_error)
-    }
+    } */
   }
 
   async handlePostSong (req, res) {

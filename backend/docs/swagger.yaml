@@ -15,8 +15,14 @@ tags:
   description: Canciones de la aplicacion
 - name: User
   description: usuarios de la plataforma
+- name: Gender
+  description: Generos de canciones
+- name: Artist
+  description: Artistas registrados en la plataforma
 - name: PlayList
   description: Playlist de usuarios
+- name: Album
+  description: Albumes de la plataforma
 components:
   schemas:
     Song:
@@ -46,10 +52,10 @@ components:
       type: object
       properties:
           id:
-            type: integer
-            format: int64   
           username: 
             type: string
+          email: 
+            type: string  
           password: 
             type: string
 paths:
@@ -83,6 +89,8 @@ paths:
         404:
           description: not found
           content: {}
+
+      
           
 
         
