@@ -6,25 +6,28 @@ class TipoCuentaController {
     this._entity = tipocuenta
   }
 
-  getAllTipoCuenta () {
-    const response = this._service.all('tipocuenta')
+  async createNewAccount (tipocuenta) {
+    const newAccount = new this._entity(tipocuenta)
+    const response = await this._service.insertData('tipocuenta', newAccount)
     return response
   }
 
-  createNewTipoCuenta (tipocuenta) {
-    const newTipoCuenta = new this._entity(tipocuenta)
-    const response = this._service.save('tipocuenta', newTipoCuenta)
+  async getAllAccount () {
+    const response = await this._service.allData('tipocuenta')
     return response
   }
 
-  updateSong (song) {
-    console.log(song)
-    return 'updated a song'
+  findAccount (account) {
   }
 
-  deleteSong (id) {
-    console.log(id)
-    return 'deleted a song'
+  async updateAccount (id, song) {
+    const response = await this._service.updateItem('tipocuenta', id, song)
+    return response
+  }
+
+  async deleteAccount (id) {
+    const response = await this._service.deleteItem('tipocuenta', id)
+    return response
   }
 }
 

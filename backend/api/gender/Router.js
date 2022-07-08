@@ -10,36 +10,47 @@ class GenderRouter {
   registerRoutes () {
     this._router.get('/', this.handleGetGender.bind(this))
     this._router.post('/', this.handlePostGender.bind(this))
-    // this._router.delete('/', this.handleDeleteSong.bind(this))
-    // this._router.put('/', this.handlePutSong.bind(this))
+    this._router.put('/:id', this.handlePutGender.bind(this))
+    this._router.delete('/:id', this.handleDeleteGender.bind(this))
   }
 
-  handleGetGender (req, res) {
+  async handlePostGender (req, res) {
+    const result = await this._ctrl.createNewGender(req.body)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
+  }
+
+  async handleGetGender (req, res) {
     try {
-      const result = this._ctrl.getAllGender()
+      const result = await this._ctrl.getAllGender()
       this._response.success(req, res, result, this._httpCode.ok)
       if (result.length === 0) {
-        this._response.success(req, res, 'No hay generos', this._httpCode.not_found)
+        this._response.success(req, res, 'No hay Generos', this._httpCode.not_found)
       }
     } catch (error) {
       this._response.error(req, res, error, this._httpCode.internal_server_error)
     }
   }
 
-  handlePostGender (req, res) {
-    const artist = req.body
-    const result = this._ctrl.createNewGender(artist)
+  handleGetaGender (req, res) {}
+
+  async handlePutGender (req, res) {
+    const album = req.body
+    const { id } = req.params
+    const result = await this._ctrl.updateGender(id, album)
     this._response.success(req, res, result, 200)
   }
 
-  handleDeleteSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta delet/song')
-  }
-
-  handlePutSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta put/song')
+  async handleDeleteGender (req, res) {
+    const { id } = req.params
+    console.log(id)
+    const result = await this._ctrl.deleteGender(id)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
   }
 }
 

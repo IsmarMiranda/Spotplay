@@ -8,38 +8,54 @@ class TipoCuentaRouter {
   }
 
   registerRoutes () {
-    this._router.get('/', this.handleGetTipoCuenta.bind(this))
-    this._router.post('/', this.handlePostTipoCuenta.bind(this))
-    this._router.delete('/', this.handleDeleteSong.bind(this))
-    this._router.put('/', this.handlePutSong.bind(this))
+    this._router.get('/', this.handleGetAccount.bind(this))
+    this._router.post('/', this.handlePostAccount.bind(this))
+    this._router.get('/:name', this.handleGetAccount.bind(this))
+    this._router.delete('/:id', this.handleDeleteAccount.bind(this))
+    this._router.put('/:id', this.handlePutAccount.bind(this))
   }
 
-  handleGetTipoCuenta (req, res) {
+  async handleGetAccount (req, res) {
     try {
-      const result = this._ctrl.getAllTipoCuenta()
+      const result = await this._ctrl.getAllAccount()
       this._response.success(req, res, result, this._httpCode.ok)
       if (result.length === 0) {
-        this._response.success(req, res, 'No hay Tipos de cuenta', this._httpCode.not_found)
+        this._response.success(req, res, 'No hay Cuentas', this._httpCode.not_found)
       }
     } catch (error) {
       this._response.error(req, res, error, this._httpCode.internal_server_error)
     }
   }
 
-  handlePostTipoCuenta (req, res) {
-    const tipocuenta = req.body
-    const result = this._ctrl.createNewTipoCuenta(tipocuenta)
+  async handlePostAccount (req, res) {
+    const result = await this._ctrl.createNewAccount(req.body)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
+  }
+
+  handleGetaAccountg (req, res) {
+    const { name } = req.params
+    const result = this._ctrl.findAccount(name)
     this._response.success(req, res, result, 201)
   }
 
-  handleDeleteSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta delet/song')
+  async handleDeleteAccount (req, res) {
+    const { id } = req.params
+    console.log(id)
+    const result = await this._ctrl.deleteAccount(id)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
   }
 
-  handlePutSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta put/song')
+  async handlePutAccount (req, res) {
+    const song = req.body
+    const { id } = req.params
+    const result = await this._ctrl.updateAccount(id, song)
+    this._response.success(req, res, result, 200)
   }
 }
 

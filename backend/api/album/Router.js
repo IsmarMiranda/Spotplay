@@ -10,13 +10,13 @@ class ArtistRouter {
   registerRoutes () {
     this._router.get('/', this.handleGetAlbum.bind(this))
     this._router.post('/', this.handlePostAlbum.bind(this))
-    // this._router.delete('/', this.handleDeleteSong.bind(this))
-    // this._router.put('/', this.handlePutSong.bind(this))
+    this._router.put('/:id', this.handlePutAlbum.bind(this))
+    this._router.delete('/:id', this.handleDeleteAlbum.bind(this))
   }
 
-  handleGetAlbum (req, res) {
+  async handleGetAlbum (req, res) {
     try {
-      const result = this._ctrl.getAllAlbum()
+      const result = await this._ctrl.getAllAlbum()
       this._response.success(req, res, result, this._httpCode.ok)
       if (result.length === 0) {
         this._response.success(req, res, 'No hay Albumes', this._httpCode.not_found)
@@ -26,21 +26,31 @@ class ArtistRouter {
     }
   }
 
-  handlePostAlbum (req, res) {
-    const artist = req.body
-    const result = this._ctrl.createNewAlbum(artist)
+  async handlePostAlbum (req, res) {
+    const result = await this._ctrl.createNewAlbum(req.body)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
+  }
+
+  handleGetaSong (req, res) {}
+
+  async handlePutAlbum (req, res) {
+    const album = req.body
+    const { id } = req.params
+    const result = await this._ctrl.updateAlbum(id, album)
     this._response.success(req, res, result, 200)
   }
 
-  handleDeleteSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta delet/song')
-  }
-
-  handlePutSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta put/song')
+  async handleDeleteAlbum (req, res) {
+    const { id } = req.params
+    console.log(id)
+    const result = await this._ctrl.deleteAlbum(id)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
   }
 }
-
 export default ArtistRouter

@@ -61,6 +61,15 @@ export class DataJson {
     }
     return null
   }
+
+  update (table, data) {
+    const items = this.readJsonFile()
+    const newItems = items[table].filter(item => item._id !== data._id)
+    newItems.push(data)
+    items[table] = newItems
+    this.writeJsonFile(items)
+    return data
+  }
 }
 
 // const data = new DataJson()
@@ -73,4 +82,7 @@ export class DataJson {
 
 // const test = new DataJson()
 // const result = test.findByAtribute('song', '_title', 'Minutos')
+// console.table(result)
+// const data = new DataJson()
+// const result = data.delete('song', 1)
 // console.table(result)

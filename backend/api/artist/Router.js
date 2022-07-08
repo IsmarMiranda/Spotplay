@@ -9,14 +9,22 @@ class ArtistRouter {
 
   registerRoutes () {
     this._router.get('/', this.handleGetArtist.bind(this))
-    this._router.post('/', this.handlePostTipoCuenta.bind(this))
-    // this._router.delete('/', this.handleDeleteSong.bind(this))
-    // this._router.put('/', this.handlePutSong.bind(this))
+    this._router.post('/', this.handlePostArtist.bind(this))
+    this._router.put('/:id', this.handlePutArtist.bind(this))
+    this._router.delete('/:id', this.handleDeleteArtist.bind(this))
   }
 
-  handleGetArtist (req, res) {
+  async handlePostArtist (req, res) {
+    const result = await this._ctrl.createNewArtist(req.body)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
+  }
+
+  async handleGetArtist (req, res) {
     try {
-      const result = this._ctrl.getAllArtist()
+      const result = await this._ctrl.getAllArtist()
       this._response.success(req, res, result, this._httpCode.ok)
       if (result.length === 0) {
         this._response.success(req, res, 'No hay Artistas', this._httpCode.not_found)
@@ -26,20 +34,23 @@ class ArtistRouter {
     }
   }
 
-  handlePostTipoCuenta (req, res) {
-    const artist = req.body
-    const result = this._ctrl.createNewArtist(artist)
+  handleGetaArtist (req, res) {}
+
+  async handlePutArtist (req, res) {
+    const album = req.body
+    const { id } = req.params
+    const result = await this._ctrl.updateArtist(id, album)
     this._response.success(req, res, result, 200)
   }
 
-  handleDeleteSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta delet/song')
-  }
-
-  handlePutSong (req, res) {
-    console.log(req)
-    res.send('soy el manejador de la ruta put/song')
+  async handleDeleteArtist (req, res) {
+    const { id } = req.params
+    console.log(id)
+    const result = await this._ctrl.deleteArtist(id)
+    if (result instanceof Error) {
+      this._response.error(req, res, result, 201)
+    }
+    this._response.success(req, res, result, this._httpCode.ok)
   }
 }
 
